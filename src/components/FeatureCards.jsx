@@ -2,9 +2,9 @@ import React from "react";
 import { Zap, ShieldCheck, CreditCard, Headset } from "lucide-react";
 
 const FEATURES = [
-  { icon: Zap, title: "Instant delivery", body: "Logs land in your dashboard the moment payment clears, no waiting on email." },
+  { icon: Zap, title: "Instant delivery", body: "Keys land in your dashboard the moment payment clears, no waiting on email." },
   { icon: ShieldCheck, title: "Verified vendors", body: "Every listing is sourced and checked before it goes live on the store." },
-  { icon: CreditCard, title: "Pay your way", body: "Check out with a manual bank transfer or straight through Paystack." },
+  { icon: CreditCard, title: "Pay your way", body: "Check out with a manual bank transfer or straight through Paga." },
   { icon: Headset, title: "Human support", body: "Real people answer activation issues, refunds, and account questions." },
 ];
 

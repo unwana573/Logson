@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://logson-backend.onrender.com";
 
 const ACCESS_TOKEN_KEY = "logson_access_token";
 const REFRESH_TOKEN_KEY = "logson_refresh_token";

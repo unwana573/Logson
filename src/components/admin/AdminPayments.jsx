@@ -45,7 +45,7 @@ export default function AdminPayments() {
           <div className="flex-1 min-w-0">
             <p className="text-[13px] text-text">{o.product_name}</p>
             <p className="text-[12px] mt-0.5 text-faint">
-              {o.user_email} &middot; {o.payment_method === "manual" ? "Manual transfer" : "Paystack"}
+              {o.user_email} &middot; {o.payment_method === "manual" ? "Manual transfer" : "Paga"}
             </p>
           </div>
           <span className="text-[13.5px] shrink-0 font-mono font-semibold text-text">{formatNaira(o.amount_kobo)}</span>
@@ -56,7 +56,7 @@ export default function AdminPayments() {
               </button>
             ) : (
               <span className="shrink-0 text-[11px] px-3 py-1.5 rounded-full font-medium" style={{ background: "#3A241B", color: "#E39A6B" }}>
-                Awaiting Paystack
+                Awaiting Paga
               </span>
             )
           ) : (

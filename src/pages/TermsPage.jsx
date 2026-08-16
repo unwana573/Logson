@@ -18,7 +18,7 @@ export default function TermsPage() {
         </p>
         <p className="text-[13.5px] text-muted leading-relaxed">
           Payments made via manual bank transfer are reviewed and approved by an admin. Payments
-          made via Paystack are verified automatically once Paystack confirms the transaction.
+          made via Paga are verified automatically once Paga confirms the transaction.
         </p>
       </div>
     </>

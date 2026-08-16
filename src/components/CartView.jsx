@@ -36,12 +36,16 @@ export default function CartView() {
           proofUrl: method === "manual" ? proofUrl.trim() : undefined,
         });
 
-        if (method === "paystack") {
-          const init = await orderService.paystackInit(order.id);
-          // In production, redirect the browser to init.authorization_url,
-          // let Paystack collect payment, then handle the callback route
-          // by calling orderService.paystackVerify(order.id).
-          window.location.href = init.authorization_url;
+        if (method === "paga") {
+          const init = await orderService.pagaInit(order.id);
+          // Redirect to Paga's payment link; Paga's webhook confirms
+          // payment and fulfils the order automatically on their end,
+          // no polling required from here.
+          if (init.web_payment_link) {
+            window.location.href = init.web_payment_link;
+            return;
+          }
+          setError("Paga didn't return a payment link. Try again in a moment.");
           return;
         }
       }
@@ -62,7 +66,7 @@ export default function CartView() {
         <ShoppingCart size={16} className="text-brass" />
         <h1 className="font-display font-semibold text-[22px] text-text">Checkout</h1>
       </div>
-      <p className="text-[13px] mb-6 text-muted">Review your cart, then pay by bank transfer or Paystack.</p>
+      <p className="text-[13px] mb-6 text-muted">Review your cart, then pay by bank transfer or Paga.</p>
 
       {items.length === 0 ? (
         <div className="rounded-2xl border border-border bg-panel p-10 text-center">
@@ -119,14 +123,14 @@ export default function CartView() {
                 Manual transfer
               </button>
               <button
-                onClick={() => setMethod("paystack")}
+                onClick={() => setMethod("paga")}
                 className={`rounded-lg px-3 py-2.5 flex items-center gap-2 text-[12.5px] border ${
-                  method === "paystack" ? "border-brass text-brass" : "border-border text-muted"
+                  method === "paga" ? "border-brass text-brass" : "border-border text-muted"
                 }`}
-                style={{ background: method === "paystack" ? "#20180D" : "#0C0E14" }}
+                style={{ background: method === "paga" ? "#20180D" : "#0C0E14" }}
               >
                 <CreditCard size={14} />
-                Paystack
+                Paga
               </button>
             </div>
 
@@ -172,7 +176,8 @@ export default function CartView() {
             ) : (
               <div>
                 <p className="text-[12.5px] mb-3 text-muted leading-relaxed">
-                  You'll be redirected to Paystack to complete payment securely.
+                  You'll be redirected to Paga to complete payment securely -- by bank
+                  transfer, USSD, or card, whichever you prefer once there.
                 </p>
                 {error && <p className="text-[12px] mb-2" style={{ color: "#D8433F" }}>{error}</p>}
                 <button
@@ -180,7 +185,7 @@ export default function CartView() {
                   onClick={handlePlaceOrder}
                   className="w-full h-10 rounded-lg text-[13px] font-semibold bg-brass text-brassDark disabled:opacity-60"
                 >
-                  {submitting ? "Starting..." : `Pay ${formatNaira(total)} with Paystack`}
+                  {submitting ? "Starting..." : `Pay ${formatNaira(total)} with Paga`}
                 </button>
               </div>
             )}

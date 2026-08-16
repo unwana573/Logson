@@ -37,7 +37,7 @@ export default function OrdersPage() {
                   {o.product_name} &times; {o.quantity}
                 </p>
                 <p className="text-[12px] mt-0.5 text-faint">
-                  {o.payment_method === "manual" ? "Manual transfer" : "Paystack"} &middot; {formatDate(o.created_at)}
+                  {o.payment_method === "manual" ? "Manual transfer" : "Paga"} &middot; {formatDate(o.created_at)}
                 </p>
               </div>
               <div className="flex items-center gap-4">
