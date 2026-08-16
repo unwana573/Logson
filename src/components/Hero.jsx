@@ -42,14 +42,14 @@ export default function Hero() {
 
       <div className="relative max-w-2xl mx-auto text-center">
         <span className="inline-block text-[11.5px] px-3 py-1.5 rounded-full mb-6 bg-panel border border-border text-muted">
-          Genuine licenses, delivered instantly
+          Genuine logs, delivered instantly
         </span>
         <h1 className="font-display font-semibold text-[42px] leading-[1.15] tracking-tight text-text">
-          Software licenses, without the wait
+          Reliabke logs, without the wait
         </h1>
         <p className="text-[15px] mt-4 mx-auto text-muted leading-relaxed max-w-[460px]">
-          Buy verified keys for the tools you already run &mdash; delivered to your dashboard
-          the second your payment clears.
+          Buy verified logs for the software you need &mdash; delivered to your dashboard
+          the second your payment is confirmed.
         </p>
 
         <div className="flex items-center justify-center gap-3 mt-8">

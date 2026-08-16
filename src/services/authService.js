@@ -14,5 +14,8 @@ export const authService = {
   googleAuth: (idToken) =>
     api.post("/auth/google", { id_token: idToken }, { auth: false }),
 
+  refresh: (refreshToken) =>
+    api.post("/auth/refresh", { refresh_token: refreshToken }, { auth: false }),
+
   me: () => api.get("/auth/me"),
 };

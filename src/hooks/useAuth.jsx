@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { authService } from "../services/authService";
-import { getToken, setToken } from "../services/api";
+import { getAccessToken, setTokens, clearTokens } from "../services/api";
 
 const AuthContext = createContext(null);
 
@@ -10,8 +10,11 @@ export function AuthProvider({ children }) {
 
   // On first load, if a token is stored from a previous session, fetch the
   // current user so a page refresh doesn't drop them back to signed-out.
+  // If the access token has expired but the refresh token hasn't, this
+  // still works -- api.js transparently refreshes on the 401 from /auth/me
+  // before this .catch ever sees a failure.
   useEffect(() => {
-    const token = getToken();
+    const token = getAccessToken();
     if (!token) {
       setLoading(false);
       return;
@@ -19,33 +22,33 @@ export function AuthProvider({ children }) {
     authService
       .me()
       .then(setUser)
-      .catch(() => setToken(null))
+      .catch(() => clearTokens())
       .finally(() => setLoading(false));
   }, []);
 
   const signup = async ({ fullName, email, password }) => {
     const data = await authService.signup({ fullName, email, password });
-    setToken(data.access_token);
+    setTokens(data);
     setUser(data.user);
     return data.user;
   };
 
   const login = async ({ email, password }) => {
     const data = await authService.login({ email, password });
-    setToken(data.access_token);
+    setTokens(data);
     setUser(data.user);
     return data.user;
   };
 
   const googleAuth = async (idToken) => {
     const data = await authService.googleAuth(idToken);
-    setToken(data.access_token);
+    setTokens(data);
     setUser(data.user);
     return data.user;
   };
 
   const signOut = () => {
-    setToken(null);
+    clearTokens();
     setUser(null);
   };
 

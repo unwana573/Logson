@@ -7,6 +7,7 @@ import ProductsPage from "./pages/ProductsPage";
 import CartPage from "./pages/CartPage";
 import OrdersPage from "./pages/OrdersPage";
 import MyProductsPage from "./pages/MyProductsPage";
+import FeedbackPage from "./pages/FeedbackPage";
 import RulesPage from "./pages/RulesPage";
 import TermsPage from "./pages/TermsPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="cart" element={<CartPage />} />
         <Route path="orders" element={<OrdersPage />} />
         <Route path="my-products" element={<MyProductsPage />} />
+        <Route path="feedback" element={<FeedbackPage />} />
         <Route path="rules" element={<RulesPage />} />
         <Route path="terms" element={<TermsPage />} />
         <Route path="admin" element={<AdminDashboardPage />} />
