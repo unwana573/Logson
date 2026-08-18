@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
-import PublicProductsPage from "./pages/PublicProductsPage";
+import PublicProductsPage from "./pages/PublicProductsPage.jsx";
 import AuthPage from "./pages/AuthPage";
 import DashboardLayout from "./pages/DashboardLayout";
 import ProductsPage from "./pages/ProductsPage";
