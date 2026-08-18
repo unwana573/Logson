@@ -31,6 +31,12 @@ export default function AuthPage() {
       setError("Fill in every field to continue.");
       return;
     }
+    // Mirror the backend password policy so a weak password is caught before
+    // the round-trip (the server enforces the same rule and is the real gate).
+    if (isSignup && (password.length < 8 || !/[a-zA-Z]/.test(password) || !/[0-9]/.test(password))) {
+      setError("Password must be at least 8 characters and include a letter and a number.");
+      return;
+    }
 
     setSubmitting(true);
     try {
@@ -93,6 +99,10 @@ export default function AuthPage() {
             <Field icon={Mail} placeholder="Email address" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <Field icon={Lock} placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
+
+          {isSignup && (
+            <p className="text-[11px] mt-2 text-faint">Use at least 8 characters, including a letter and a number.</p>
+          )}
 
           {error && <p className="text-[12px] mt-3" style={{ color: "#D8433F" }}>{error}</p>}
 

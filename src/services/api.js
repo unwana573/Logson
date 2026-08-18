@@ -33,17 +33,27 @@ class ApiError extends Error {
 }
 
 async function rawRequest(path, { method = "GET", body, auth = true, headers = {} } = {}) {
-  const finalHeaders = { "Content-Type": "application/json", ...headers };
+  const isFormData = body instanceof FormData;
+  // For FormData let the browser set Content-Type -- it appends the multipart
+  // boundary the server needs; hard-coding application/json would break it.
+  const finalHeaders = isFormData
+    ? { ...headers }
+    : { "Content-Type": "application/json", ...headers };
 
   if (auth) {
     const token = getAccessToken();
     if (token) finalHeaders.Authorization = `Bearer ${token}`;
   }
 
+  let payload;
+  if (body !== undefined) {
+    payload = isFormData ? body : JSON.stringify(body);
+  }
+
   const res = await fetch(`${API_BASE_URL}${path}`, {
     method,
     headers: finalHeaders,
-    body: body !== undefined ? JSON.stringify(body) : undefined,
+    body: payload,
   });
 
   const isJson = res.headers.get("content-type")?.includes("application/json");
@@ -118,11 +128,35 @@ async function request(path, opts = {}) {
   return data;
 }
 
+// Same refresh-on-401 flow as request(), but returns the raw response body as
+// a Blob -- for bearer-protected binary endpoints (e.g. proof images) that
+// can't be loaded through a plain <img src>.
+async function requestBlob(path, opts = {}) {
+  const { auth = true } = opts;
+  let { res, data } = await rawRequest(path, opts);
+
+  const isAuthRoute = path.startsWith("/auth/");
+  if (res.status === 401 && auth && !isAuthRoute) {
+    const refreshed = await refreshAccessToken();
+    if (refreshed) {
+      ({ res, data } = await rawRequest(path, opts));
+    }
+  }
+
+  if (!res.ok) {
+    const message = data?.detail || res.statusText || "Something went wrong";
+    throw new ApiError(message, res.status, data);
+  }
+
+  return res.blob();
+}
+
 export const api = {
   get: (path, opts) => request(path, { ...opts, method: "GET" }),
   post: (path, body, opts) => request(path, { ...opts, method: "POST", body }),
   patch: (path, body, opts) => request(path, { ...opts, method: "PATCH", body }),
   delete: (path, opts) => request(path, { ...opts, method: "DELETE" }),
+  getBlob: (path, opts) => requestBlob(path, { ...opts, method: "GET" }),
 };
 
 export { ApiError, API_BASE_URL };

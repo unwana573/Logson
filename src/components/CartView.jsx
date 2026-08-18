@@ -13,15 +13,21 @@ export default function CartView() {
   const { refreshUser } = useAuth();
 
   const [method, setMethod] = useState("manual");
-  const [proofUrl, setProofUrl] = useState("");
+  const [proofFile, setProofFile] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
   const handlePlaceOrder = async () => {
     setError("");
-    if (method === "manual" && !proofUrl.trim()) {
-      setError("Attach a proof-of-payment link before submitting.");
-      return;
+    if (method === "manual") {
+      if (!proofFile) {
+        setError("Attach a proof-of-payment image before submitting.");
+        return;
+      }
+      if (proofFile.size > 5 * 1024 * 1024) {
+        setError("Proof image must be 5 MB or smaller.");
+        return;
+      }
     }
 
     setSubmitting(true);
@@ -33,8 +39,12 @@ export default function CartView() {
           productId: item.product.id,
           quantity: item.qty,
           paymentMethod: method,
-          proofUrl: method === "manual" ? proofUrl.trim() : undefined,
         });
+
+        if (method === "manual") {
+          // Second step: attach the proof image to the order we just made.
+          await orderService.uploadProof(order.id, proofFile);
+        }
 
         if (method === "paga") {
           const init = await orderService.pagaInit(order.id);
@@ -149,16 +159,19 @@ export default function CartView() {
                   ))}
                 </div>
 
-                <label className="text-[11px] text-faint">Proof of payment (URL)</label>
-                <div className="mt-1 mb-3 flex items-center gap-2 rounded-lg px-3.5 bg-ink border border-border" style={{ height: 44 }}>
-                  <UploadCloud size={15} className="text-faint" />
+                <label className="text-[11px] text-faint">Proof of payment (image)</label>
+                <label className="mt-1 mb-3 flex items-center gap-2 rounded-lg px-3.5 bg-ink border border-border cursor-pointer" style={{ height: 44 }}>
+                  <UploadCloud size={15} className="text-faint shrink-0" />
+                  <span className={`flex-1 truncate text-[13px] ${proofFile ? "text-text" : "text-faint"}`}>
+                    {proofFile ? proofFile.name : "Choose an image (JPEG, PNG, WEBP)"}
+                  </span>
                   <input
-                    value={proofUrl}
-                    onChange={(e) => setProofUrl(e.target.value)}
-                    placeholder="https://..."
-                    className="w-full bg-transparent outline-none text-[13px] text-text"
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp"
+                    onChange={(e) => setProofFile(e.target.files?.[0] || null)}
+                    className="hidden"
                   />
-                </div>
+                </label>
 
                 {error && <p className="text-[12px] mb-2" style={{ color: "#D8433F" }}>{error}</p>}
 

@@ -3,6 +3,48 @@ import { CreditCard } from "lucide-react";
 import { orderService } from "../../services/orderService";
 import { formatNaira } from "../../utils/format";
 
+// The proof endpoint is bearer-protected, so a plain <img src> can't load it.
+// Fetch the image as a Blob, render it via an object URL, and revoke that URL
+// on unmount so we don't leak it.
+function ProofThumb({ orderId, hasProof }) {
+  const [url, setUrl] = useState(null);
+
+  useEffect(() => {
+    if (!hasProof) return undefined;
+    let objectUrl;
+    let active = true;
+    orderService
+      .getProof(orderId)
+      .then((blob) => {
+        if (!active) return;
+        objectUrl = URL.createObjectURL(blob);
+        setUrl(objectUrl);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [orderId, hasProof]);
+
+  if (hasProof && url) {
+    return (
+      <img
+        src={url}
+        alt="Payment proof"
+        className="rounded-lg shrink-0 object-cover border border-border"
+        style={{ width: 44, height: 56 }}
+      />
+    );
+  }
+
+  return (
+    <div className="rounded-lg shrink-0 flex items-center justify-center bg-ink border border-border" style={{ width: 44, height: 56 }}>
+      <CreditCard size={15} className="text-faint" />
+    </div>
+  );
+}
+
 export default function AdminPayments() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,13 +77,7 @@ export default function AdminPayments() {
       {error && <p className="text-[12px]" style={{ color: "#D8433F" }}>{error}</p>}
       {orders.map((o) => (
         <div key={o.id} className="rounded-2xl border border-border bg-panel p-4 flex items-center gap-4">
-          {o.proof_url ? (
-            <img src={o.proof_url} alt="Payment proof" className="rounded-lg shrink-0 object-cover border border-border" style={{ width: 44, height: 56 }} />
-          ) : (
-            <div className="rounded-lg shrink-0 flex items-center justify-center bg-ink border border-border" style={{ width: 44, height: 56 }}>
-              <CreditCard size={15} className="text-faint" />
-            </div>
-          )}
+          <ProofThumb orderId={o.id} hasProof={o.has_proof} />
           <div className="flex-1 min-w-0">
             <p className="text-[13px] text-text">{o.product_name}</p>
             <p className="text-[12px] mt-0.5 text-faint">

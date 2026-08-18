@@ -1,13 +1,24 @@
 import { api } from "./api";
 
 export const orderService = {
-  create: ({ productId, quantity, paymentMethod, proofUrl }) =>
+  create: ({ productId, quantity, paymentMethod }) =>
     api.post("/orders", {
       product_id: productId,
       quantity,
       payment_method: paymentMethod, // "manual" | "paga"
-      proof_url: proofUrl,
     }),
+
+  // Manual transfer proof-of-payment image. Sent as multipart/form-data;
+  // the field name "file" matches the backend's UploadFile parameter.
+  uploadProof: (orderId, file) => {
+    const form = new FormData();
+    form.append("file", file);
+    return api.post(`/orders/${orderId}/proof`, form);
+  },
+
+  // The proof endpoint is bearer-protected, so it can't be loaded via a plain
+  // <img src>; fetch the bytes as a Blob and let the caller make an object URL.
+  getProof: (orderId) => api.getBlob(`/orders/${orderId}/proof`),
 
   myOrders: () => api.get("/orders/me"),
 
