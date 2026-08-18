@@ -78,14 +78,14 @@ export default function AuthPage() {
           <p className="text-[13px] mt-1 text-muted">{isSignup ? "Create your account" : "Welcome back"}</p>
         </div>
 
-        {isSignup && (
+        {/* {isSignup && (
           <div className="flex items-start gap-2.5 rounded-lg px-3.5 py-3 mb-4 border border-border" style={{ background: "#20180D" }}>
             <ShieldAlert size={15} className="text-brass shrink-0 mt-0.5" />
             <p className="text-[12px] text-muted leading-relaxed">
               If no accounts exist yet on this store, this signup becomes the admin automatically.
             </p>
           </div>
-        )}
+        )} */}
 
         <div className="rounded-2xl border border-border bg-panel p-6">
           <div className="space-y-3">

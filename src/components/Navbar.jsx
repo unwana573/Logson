@@ -2,7 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 
-const NAV_LINKS = ["Products", "Categories", "Support"];
+const NAV_LINKS = [
+  { label: "Products", path: "/products" },
+  { label: "Categories", path: "/products" },
+];
+
+const SUPPORT_EMAIL = "support@logson.ng";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -12,10 +17,17 @@ export default function Navbar() {
       <Logo />
       <nav className="hidden md:flex items-center gap-7">
         {NAV_LINKS.map((l) => (
-          <span key={l} className="text-[13.5px] text-muted cursor-pointer">
-            {l}
-          </span>
+          <button
+            key={l.label}
+            onClick={() => navigate(l.path)}
+            className="text-[13.5px] text-muted hover:text-text transition-colors"
+          >
+            {l.label}
+          </button>
         ))}
+        <a href={`mailto:${SUPPORT_EMAIL}`} className="text-[13.5px] text-muted hover:text-text transition-colors">
+          Support
+        </a>
       </nav>
       <div className="flex items-center gap-3">
         <button onClick={() => navigate("/signin")} className="text-[13.5px] hidden sm:inline text-muted">

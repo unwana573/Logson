@@ -1,13 +1,14 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
+import PublicProductsPage from "./pages/PublicProductsPage";
 import AuthPage from "./pages/AuthPage";
 import DashboardLayout from "./pages/DashboardLayout";
 import ProductsPage from "./pages/ProductsPage";
 import CartPage from "./pages/CartPage";
 import OrdersPage from "./pages/OrdersPage";
 import MyProductsPage from "./pages/MyProductsPage";
-import FeedbackPage from "./pages/FeedbackPage";
+import FeedbackPage from "./pages/FeedbackPage.jsx";
 import RulesPage from "./pages/RulesPage";
 import TermsPage from "./pages/TermsPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
@@ -17,6 +18,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route path="/products" element={<PublicProductsPage />} />
       <Route path="/signin" element={<AuthPage />} />
       <Route path="/signup" element={<AuthPage />} />
 

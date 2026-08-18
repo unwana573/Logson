@@ -15,10 +15,11 @@ export const productService = {
 
   get: (id) => api.get(`/products/${id}`, { auth: false }),
 
-  create: ({ name, vendor, categoryId, priceKobo, imageUrl, stockText }) =>
+  create: ({ name, vendor, description, categoryId, priceKobo, imageUrl, stockText }) =>
     api.post("/products", {
       name,
       vendor,
+      description,
       category_id: categoryId,
       price_kobo: priceKobo,
       image_url: imageUrl,
