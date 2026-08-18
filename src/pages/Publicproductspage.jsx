@@ -6,6 +6,7 @@ import { categoryService } from "../services/categoryService";
 import { formatNaira } from "../utils/format";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { ProductGridSkeleton } from "../components/Skeleton";
 
 const CATEGORIES_ALL = "All";
 
@@ -89,7 +90,7 @@ export default function PublicProductsPage() {
           </div>
 
           {loading ? (
-            <p className="text-[13px] text-muted">Loading&hellip;</p>
+            <ProductGridSkeleton />
           ) : error ? (
             <div className="rounded-2xl border border-border bg-panel p-10 text-center">
               <p className="text-[13px] text-muted">Couldn't load products: {error}</p>

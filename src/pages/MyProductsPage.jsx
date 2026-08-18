@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ShieldCheck } from "lucide-react";
 import { userService } from "../services/orderService";
 import OwnedProductCard from "../components/OwnedProductCard";
+import { OwnedProductGridSkeleton } from "../components/Skeleton";
 
 export default function MyProductsPage() {
   const [items, setItems] = useState([]);
@@ -25,7 +26,7 @@ export default function MyProductsPage() {
       </p>
 
       {loading ? (
-        <p className="text-[13px] text-muted">Loading&hellip;</p>
+        <OwnedProductGridSkeleton />
       ) : items.length === 0 ? (
         <div className="rounded-2xl border border-border bg-panel p-10 text-center">
           <p className="text-[13px] text-muted">No products yet. Purchases show up here once confirmed.</p>

@@ -5,6 +5,7 @@ import { useProducts } from "../hooks/useProducts";
 import { useCart } from "../hooks/useCart.jsx";
 import { categoryService } from "../services/categoryService";
 import ProductCard from "../components/ProductCard";
+import { ProductGridSkeleton } from "../components/Skeleton";
 
 export default function ProductsPage() {
   const { searchQuery } = useOutletContext();
@@ -48,7 +49,7 @@ export default function ProductsPage() {
       </div>
 
       {loading ? (
-        <p className="text-[13px] text-muted">Loading&hellip;</p>
+        <ProductGridSkeleton />
       ) : error ? (
         <div className="rounded-2xl border border-border bg-panel p-10 text-center">
           <p className="text-[13px] text-muted">Couldn't load products: {error}</p>

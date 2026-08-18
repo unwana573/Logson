@@ -11,6 +11,11 @@ export const orderService = {
 
   myOrders: () => api.get("/orders/me"),
 
+  // Remove one of your own orders you've changed your mind about. The
+  // backend only allows this for orders that haven't been fulfilled yet
+  // (see OrderService.delete_order).
+  remove: (orderId) => api.delete(`/orders/${orderId}`),
+
   // Admin: view all orders/payments, optionally filtered by status
   listAll: (status) => api.get(`/orders${status ? `?status=${status}` : ""}`),
 
