@@ -44,8 +44,8 @@ export default function Hero() {
         <span className="inline-block text-[11.5px] px-3 py-1.5 rounded-full mb-6 bg-panel border border-border text-muted">
           Genuine logs, delivered instantly
         </span>
-        <h1 className="font-display font-semibold text-[42px] leading-[1.15] tracking-tight text-text">
-          Reliabke logs, without the wait
+        <h1 className="font-display font-semibold text-[32px] sm:text-[42px] leading-[1.15] tracking-tight text-text">
+          Reliable logs, without the wait
         </h1>
         <p className="text-[15px] mt-4 mx-auto text-muted leading-relaxed max-w-[460px]">
           Buy verified logs for the software you need &mdash; delivered to your dashboard

@@ -32,7 +32,7 @@ export default function MyProductsPage() {
           <p className="text-[13px] text-muted">No products yet. Purchases show up here once confirmed.</p>
         </div>
       ) : (
-        <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
+        <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))" }}>
           {items.map((item, i) => (
             <OwnedProductCard key={i} item={item} />
           ))}

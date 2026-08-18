@@ -61,7 +61,7 @@ export default function ProductsPage() {
           </p>
         </div>
       ) : (
-        <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))" }}>
+        <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 240px), 1fr))" }}>
           {products.map((p) => (
             <ProductCard key={p.id} product={p} onAddToCart={addItem} />
           ))}

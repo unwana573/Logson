@@ -32,7 +32,7 @@ export function ProductCardSkeleton() {
 
 export function ProductGridSkeleton({ count = 8, minWidth = 240 }) {
   return (
-    <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(auto-fill, minmax(${minWidth}px, 1fr))` }}>
+    <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(auto-fill, minmax(min(100%, ${minWidth}px), 1fr))` }}>
       {Array.from({ length: count }).map((_, i) => (
         <ProductCardSkeleton key={i} />
       ))}
@@ -66,7 +66,7 @@ export function OrderListSkeleton({ count = 5 }) {
 /** Mirrors OwnedProductCard on the My products page. */
 export function OwnedProductGridSkeleton({ count = 4 }) {
   return (
-    <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
+    <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))" }}>
       {Array.from({ length: count }).map((_, i) => (
         <div key={i} className="rounded-2xl border border-border bg-panel overflow-hidden">
           <div className="flex items-center justify-between px-5 pt-5 pb-4">

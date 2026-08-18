@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <div className="px-6 md:px-10 pt-14 pb-8" style={{ background: "#0F1219", borderTop: "1px solid #262C3A" }}>
       <div className="max-w-4xl mx-auto">
-        <div className="grid gap-8 mb-10" style={{ gridTemplateColumns: "1.4fr 1fr 1fr 1fr" }}>
+        <div className="grid gap-8 mb-10 grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Logo />
             <p className="text-[12.5px] mt-3 text-faint leading-relaxed" style={{ maxWidth: 240 }}>

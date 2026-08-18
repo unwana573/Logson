@@ -79,7 +79,7 @@ export default function OrdersPage() {
             return (
               <div
                 key={o.id}
-                className={`flex items-center justify-between gap-3 px-5 py-3.5 ${i < orders.length - 1 ? "border-b border-border2" : ""}`}
+                className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 px-5 py-3.5 ${i < orders.length - 1 ? "border-b border-border2" : ""}`}
               >
                 <div className="min-w-0">
                   <p className="text-[13px] text-text truncate">

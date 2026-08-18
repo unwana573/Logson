@@ -100,7 +100,7 @@ export default function PublicProductsPage() {
               <p className="text-[13px] text-muted">No products in this category yet.</p>
             </div>
           ) : (
-            <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))" }}>
+            <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 240px), 1fr))" }}>
               {products.map((p) => (
                 <PublicProductCard key={p.id} product={p} onBuy={() => navigate("/signup")} />
               ))}

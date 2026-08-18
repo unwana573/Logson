@@ -79,7 +79,7 @@ export default function CartView() {
           </button>
         </div>
       ) : (
-        <div className="grid gap-5" style={{ gridTemplateColumns: "1.3fr 1fr" }}>
+        <div className="grid gap-5 grid-cols-1 lg:grid-cols-[1.3fr_1fr]">
           <div className="rounded-2xl border border-border bg-panel overflow-hidden self-start">
             {items.map((c, i) => (
               <div
